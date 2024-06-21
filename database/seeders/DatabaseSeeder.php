@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RankSeeder::class,
             CategorySeeder::class,
+            NationalitySeeder::class,
+            RecipeOriginSeeder::class,
+            MealTypeSeeder::class,
         ]);
     }
 }

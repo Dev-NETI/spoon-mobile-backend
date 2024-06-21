@@ -18,9 +18,41 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'firstname',
+        'middlename',
+        'lastname',
+        'suffix',
+        'rank_id',
+        'category_id',
+        'nationality_id',
+        'company',
+        'age',
+        'date_of_birth',
+        'height_imperial',
+        'height_metric',
+        'weight_imperial',
+        'weight_metric',
+        'image_path',
+        'is_active',
+        'modified_by',
         'email',
         'password',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $lastId = $model::orderBy('id', 'DESC')->first();
+            $slug = $lastId != NULL ? encrypt($lastId->id + 1) : encrypt(1);
+            $model->slug = $slug;
+            $model->modified_by = '';
+        });
+
+        static::updating(function ($model) {
+            $model->modified_by = '';
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
