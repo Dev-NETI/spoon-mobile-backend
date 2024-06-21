@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             MealTypeSeeder::class,
             UnitSeeder::class,
             SeasonSeeder::class,
+            FoodGroupSeeder::class,
         ]);
     }
 }
