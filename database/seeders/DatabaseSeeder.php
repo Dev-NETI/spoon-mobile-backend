@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             NationalitySeeder::class,
             RecipeOriginSeeder::class,
             MealTypeSeeder::class,
+            UnitSeeder::class,
+            SeasonSeeder::class,
         ]);
     }
 }
