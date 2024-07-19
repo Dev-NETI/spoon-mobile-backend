@@ -58,7 +58,6 @@ class AuthController extends Controller
 
     public function checkStatusEmail()
     {
-        $isVerified = Session::get('isEmailValid');
-        return response()->json(['status' => $isVerified], 200);
+        return response()->json(['isEmailValid' => Session::get('isEmailValid'), 'authEmail' => Session::get('email')], 200);
     }
 }
