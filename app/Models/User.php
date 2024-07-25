@@ -76,4 +76,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function bmi_log()
+    {
+        return $this->hasMany(BmiLog::class, 'user_id', 'id');
+    }
+
+    public function blood_pressure_log()
+    {
+        return $this->hasMany(BloodPressureLog::class, 'user_id', 'id');
+    }
 }

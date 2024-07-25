@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DietaryReferenceValue;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,13 @@ class DatabaseSeeder extends Seeder
             UnitSeeder::class,
             SeasonSeeder::class,
             FoodGroupSeeder::class,
+            RecipeRankSeeder::class,
+            ActivityLevelSeeder::class,
+            BmiCategorySeeder::class,
+            MealSeeder::class,
+            UserCategorySeeder::class,
+            CompanySeeder::class,
+            DietaryReferenceValueSeeder::class,
         ]);
     }
 }
