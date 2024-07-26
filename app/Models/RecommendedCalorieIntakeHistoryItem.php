@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeRank extends Model
+class RecommendedCalorieIntakeHistoryItem extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug', 'name', 'is_active', 'modified_by'];
+    protected $fillable = [
+        'slug', 'user_id', 'maintenance_calorie', 'mild_weight_loss', 'weight_loss', 'extreme_weight_loss', 'mild_weight_gain',
+        'weight_gain', 'extreme_weight_gain', 'is_active', 'modified_by'
+    ];
 
     protected static function boot()
     {
@@ -25,8 +28,8 @@ class RecipeRank extends Model
         });
     }
 
-    public function recipe_rank_list_item()
+    public function user()
     {
-        return $this->hasMany(RecipeRankListItem::class, 'recipe_rank_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

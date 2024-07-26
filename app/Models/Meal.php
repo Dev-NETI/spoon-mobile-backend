@@ -24,4 +24,9 @@ class Meal extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function meal_log_item()
+    {
+        return $this->hasMany(MealLogItem::class, 'meal_id');
+    }
 }

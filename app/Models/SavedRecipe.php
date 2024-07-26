@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeRank extends Model
+class SavedRecipe extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug', 'name', 'is_active', 'modified_by'];
+    protected $fillable = ['slug', 'recipe_id', 'user_id', 'is_active', 'modified_by'];
 
     protected static function boot()
     {
@@ -23,10 +23,5 @@ class RecipeRank extends Model
         static::updating(function ($model) {
             $model->modified_by = 'system';
         });
-    }
-
-    public function recipe_rank_list_item()
-    {
-        return $this->hasMany(RecipeRankListItem::class, 'recipe_rank_id', 'id');
     }
 }

@@ -86,4 +86,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(BloodPressureLog::class, 'user_id', 'id');
     }
+
+    public function meal_log_item()
+    {
+        return $this->hasMany(MealLogItem::class, 'user_id');
+    }
+
+    public function recipe_review()
+    {
+        return $this->hasMany(RecipeReview::class, 'user_id');
+    }
+
+    public function recommended_calorie_intake_history_item()
+    {
+        return $this->hasMany(RecommendedCalorieIntakeHistoryItem::class, 'user_id');
+    }
 }

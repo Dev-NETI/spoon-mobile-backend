@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeRank extends Model
+class MealLogItem extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug', 'name', 'is_active', 'modified_by'];
+    protected $fillable = ['slug', 'user_id', 'meal_id', 'recipe_id', 'number_of_serving', 'is_active', 'modified_by'];
 
     protected static function boot()
     {
@@ -25,8 +25,18 @@ class RecipeRank extends Model
         });
     }
 
-    public function recipe_rank_list_item()
+    public function user()
     {
-        return $this->hasMany(RecipeRankListItem::class, 'recipe_rank_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function meal()
+    {
+        return $this->belongsTo(Meal::class, 'meal_id');
+    }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class, 'recipe_id');
     }
 }
