@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +27,11 @@ Route::resource('/category', CategoryController::class)->only([
 ]);
 Route::resource('/rank', RankController::class)->only([
     'index',
+]);
+Route::resource('/nationality', NationalityController::class)->only([
+    'index',
+]);
+
+Route::resource('/user', UserController::class)->only([
+    'store',
 ]);
