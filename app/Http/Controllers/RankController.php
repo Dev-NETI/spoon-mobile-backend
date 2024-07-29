@@ -9,6 +9,6 @@ class RankController extends Controller
 {
     public function index()
     {
-        return response()->json(Rank::where('is_active',1)->orderBy('rank','asc')->get());
+        return response()->json(Rank::where('is_active',1)->orderBy('name','asc')->get());
     }
 }
