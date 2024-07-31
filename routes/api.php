@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BloodPressureLogController;
+use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NationalityController;
@@ -34,4 +36,13 @@ Route::resource('/nationality', NationalityController::class)->only([
 
 Route::resource('/user', UserController::class)->only([
     'store',
+]);
+Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
+
+Route::resource('/bmi-log', BmiLogController::class)->only([
+    'store', 'show'
+]);
+
+Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
+    'store'
 ]);

@@ -53,7 +53,7 @@ class UserController extends Controller
                 'password' => Hash::make($request['confirmPassword']),
             ]);
 
-            if(!$store){
+            if (!$store) {
                 return  response()->json(false);
             }
 
@@ -61,6 +61,34 @@ class UserController extends Controller
         } catch (Exception $e) {
             return  response()->json(false);
         }
+    }
 
+    public function updateMeasurement($slug, Request $request)
+    {
+        $request->validate([
+            'heightImperial' => 'required',
+            'heightMetric' => 'required',
+            'weightImperial' => 'required',
+            'weightMetric' => 'required',
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            $update = $userData->update([
+                'height_imperial' => $request['heightImperial'],
+                'height_metric' => $request['heightMetric'],
+                'weight_imperial' => $request['weightImperial'],
+                'weight_metric' => $request['weightMetric'],
+            ]);
+
+            if (!$update) {
+                return  response()->json(false);
+            }
+
+            return  response()->json(true);
+        } catch (Exception $e) {
+            return  response()->json(false);
+        }
     }
 }
