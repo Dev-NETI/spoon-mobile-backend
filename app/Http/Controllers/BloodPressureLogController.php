@@ -32,4 +32,17 @@ class BloodPressureLogController extends Controller
             return  response()->json(false);
         }
     }
+
+    public function show($userId)
+    {
+        $bloodPressureLogData = BloodPressureLog::where('is_active', 1)
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        if (empty($bloodPressureLogData)) {
+            return response()->json(false);
+        }
+        return response()->json($bloodPressureLogData);
+    }
 }

@@ -44,5 +44,5 @@ Route::resource('/bmi-log', BmiLogController::class)->only([
 ]);
 
 Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
-    'store'
+    'store', 'show'
 ]);
