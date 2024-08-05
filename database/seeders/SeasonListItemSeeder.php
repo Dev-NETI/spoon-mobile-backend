@@ -2,21 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\recipe_rank_list_item;
-use App\Models\RecipeRankListItem;
+use App\Models\SeasonListItem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RecipeRankListItemSeeder extends Seeder
+class SeasonListItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $recipeRankListItemData = RecipeRankListItem::all();
+        $seasonListItemData = SeasonListItem::all();
 
-        foreach ($recipeRankListItemData as $data) {
+        foreach ($seasonListItemData as $data) {
             $data->update([
                 'slug' => encrypt('id'),
             ]);

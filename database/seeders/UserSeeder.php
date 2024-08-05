@@ -2,23 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\recipe_rank_list_item;
-use App\Models\RecipeRankListItem;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
-class RecipeRankListItemSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $recipeRankListItemData = RecipeRankListItem::all();
+        $userData = User::all();
 
-        foreach ($recipeRankListItemData as $data) {
+        foreach ($userData as $data) {
             $data->update([
                 'slug' => encrypt('id'),
+                'password' => Hash::make('password'),
             ]);
         }
     }

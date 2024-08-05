@@ -36,6 +36,15 @@ class DatabaseSeeder extends Seeder
             UserCategorySeeder::class,
             CompanySeeder::class,
             DietaryReferenceValueSeeder::class,
+            RecipeSeeder::class,
+            IngredientSeeder::class,
+            ProcedureSeeder::class,
+            FoodGroupListItemSeeder::class,
+            SeasonListItemSeeder::class,
+            RecipeRankListItemSeeder::class,
+            UserSeeder::class,
+            BloodPressureLogSeeder::class,
+            SavedRecipeSeeder::class,
         ]);
     }
 }

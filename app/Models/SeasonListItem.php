@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SeasonListItem extends Model
 {
     use HasFactory;
-    protected $fillable = ['slig', 'recipe_id', 'season_id', 'is_active', 'modified_by'];
+    protected $fillable = ['slug', 'recipe_id', 'season_id', 'is_active', 'modified_by'];
 
     protected static function boot()
     {

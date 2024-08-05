@@ -2,21 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\recipe_rank_list_item;
-use App\Models\RecipeRankListItem;
+use App\Models\BloodPressureLog;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RecipeRankListItemSeeder extends Seeder
+class BloodPressureLogSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $recipeRankListItemData = RecipeRankListItem::all();
+        $bpLogData = BloodPressureLog::all();
 
-        foreach ($recipeRankListItemData as $data) {
+        foreach ($bpLogData as $data) {
             $data->update([
                 'slug' => encrypt('id'),
             ]);
