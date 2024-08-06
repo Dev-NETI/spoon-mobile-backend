@@ -5,8 +5,10 @@ use App\Http\Controllers\BloodPressureLogController;
 use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MealLogItemController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,3 +48,12 @@ Route::resource('/bmi-log', BmiLogController::class)->only([
 Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
     'store', 'show'
 ]);
+
+Route::resource('/recipe', RecipeController::class)->only([
+    'index'
+]);
+Route::resource('/meal-log-item', MealLogItemController::class)->only([
+    'store'
+]);
+
+Route::get('/meal-log-item/{userId}/{createdAt}', [MealLogItemController::class, 'show']);
