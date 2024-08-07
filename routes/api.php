@@ -5,6 +5,7 @@ use App\Http\Controllers\BloodPressureLogController;
 use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DietaryReferenceValueController;
 use App\Http\Controllers\MealLogItemController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
@@ -57,3 +58,7 @@ Route::resource('/meal-log-item', MealLogItemController::class)->only([
 ]);
 
 Route::get('/meal-log-item/{userId}/{createdAt}', [MealLogItemController::class, 'show']);
+
+Route::resource('/dietary-reference-value', DietaryReferenceValueController::class)->only([
+    'index'
+]);
