@@ -37,7 +37,11 @@ class User extends Authenticatable
         'modified_by',
         'email',
         'password',
+        'calorie_intake',
+        'activity_level_id',
+        'gender_id',
     ];
+    protected $with = ['activity_level'];
 
     protected static function boot()
     {
@@ -100,5 +104,10 @@ class User extends Authenticatable
     public function recommended_calorie_intake_history_item()
     {
         return $this->hasMany(RecommendedCalorieIntakeHistoryItem::class, 'user_id');
+    }
+
+    public function activity_level()
+    {
+        return $this->belongsTo(ActivityLevel::class, 'activity_level_id');
     }
 }

@@ -75,11 +75,57 @@ class UserController extends Controller
         try {
             $userData = User::where('slug', $slug)->first();
 
+            if (!$userData) {
+                return  response()->json(false);
+            }
+
             $update = $userData->update([
                 'height_imperial' => $request['heightImperial'],
                 'height_metric' => $request['heightMetric'],
                 'weight_imperial' => $request['weightImperial'],
                 'weight_metric' => $request['weightMetric'],
+            ]);
+
+            if (!$update) {
+                return  response()->json(false);
+            }
+
+            return  response()->json(true);
+        } catch (Exception $e) {
+            return  response()->json(false);
+        }
+    }
+
+    public function updateDataForEnergyComputation($slug, Request $request)
+    {
+        $request->validate([
+            'heightStandard' => 'required|numeric',
+            'heightMetric' => 'required|numeric',
+            'weightStandard' => 'required|numeric',
+            'weightMetric' => 'required|numeric',
+            'dateOfBirth' => 'required|date',
+            'age' => 'required|integer|min:0',
+            'gender' => 'required|integer',
+            'activityLevel' => 'required|integer',
+        ]);
+
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return  response()->json(false);
+            }
+
+            $update = $userData->update([
+                'height_imperial' => $request['heightStandard'],
+                'height_metric' => $request['heightMetric'],
+                'weight_imperial' => $request['weightStandard'],
+                'weight_metric' => $request['weightMetric'],
+                'date_of_birth' => $request['dateOfBirth'],
+                'age' => $request['age'],
+                'gender_id' => $request['gender'],
+                'activity_level_id' => $request['activityLevel'],
             ]);
 
             if (!$update) {

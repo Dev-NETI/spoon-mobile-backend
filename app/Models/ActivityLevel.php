@@ -24,4 +24,9 @@ class ActivityLevel extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'activity_level_id');
+    }
 }

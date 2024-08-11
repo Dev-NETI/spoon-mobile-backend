@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLevelController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BloodPressureLogController;
 use App\Http\Controllers\BmiLogController;
@@ -41,6 +42,7 @@ Route::resource('/user', UserController::class)->only([
     'store',
 ]);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
+Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
     'store', 'show'
@@ -60,5 +62,9 @@ Route::resource('/meal-log-item', MealLogItemController::class)->only([
 Route::get('/meal-log-item/{userId}/{createdAt}', [MealLogItemController::class, 'show']);
 
 Route::resource('/dietary-reference-value', DietaryReferenceValueController::class)->only([
+    'index'
+]);
+
+Route::resource('/activity-level', ActivityLevelController::class)->only([
     'index'
 ]);
