@@ -43,13 +43,16 @@ Route::resource('/user', UserController::class)->only([
 ]);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
+Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'updateCalorieIntake']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
-    'store', 'show'
+    'store',
+    'show'
 ]);
 
 Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
-    'store', 'show'
+    'store',
+    'show'
 ]);
 
 Route::resource('/recipe', RecipeController::class)->only([
