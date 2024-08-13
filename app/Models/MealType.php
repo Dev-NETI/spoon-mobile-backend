@@ -24,4 +24,9 @@ class MealType extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function recipe()
+    {
+        return $this->hasMany(Recipe::class, 'meal_type_id');
+    }
 }

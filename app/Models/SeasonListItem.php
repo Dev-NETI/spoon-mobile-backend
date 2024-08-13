@@ -24,4 +24,14 @@ class SeasonListItem extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function season()
+    {
+        return $this->belongsTo(Season::class, 'season_id');
+    }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class, 'recipe_id');
+    }
 }

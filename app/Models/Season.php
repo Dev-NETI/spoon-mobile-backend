@@ -24,4 +24,9 @@ class Season extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function season_list_item()
+    {
+        return $this->hasMany(SeasonListItem::class, 'season_id');
+    }
 }

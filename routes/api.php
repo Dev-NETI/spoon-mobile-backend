@@ -7,10 +7,12 @@ use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DietaryReferenceValueController;
+use App\Http\Controllers\FoodGroupController;
 use App\Http\Controllers\MealLogItemController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RecipeOriginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,12 @@ Route::resource('/rank', RankController::class)->only([
 Route::resource('/nationality', NationalityController::class)->only([
     'index',
 ]);
+Route::resource('/food-group', FoodGroupController::class)->only([
+    'index',
+]);
+Route::resource('/recipe-origin', RecipeOriginController::class)->only([
+    'index',
+]);
 
 Route::resource('/user', UserController::class)->only([
     'store',
@@ -56,7 +64,8 @@ Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
 ]);
 
 Route::resource('/recipe', RecipeController::class)->only([
-    'index'
+    'index',
+    'show'
 ]);
 Route::resource('/meal-log-item', MealLogItemController::class)->only([
     'store'

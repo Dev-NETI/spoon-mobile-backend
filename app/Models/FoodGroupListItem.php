@@ -24,4 +24,14 @@ class FoodGroupListItem extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function food_group()
+    {
+        return $this->belongsTo(FoodGroup::class, 'food_group_id');
+    }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class, 'recipe_id');
+    }
 }

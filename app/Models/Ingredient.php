@@ -9,8 +9,20 @@ class Ingredient extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'slug', 'recipe_id', 'name', 'instruction', 'quantity', 'unit_id', 'calories', 'carbohydrate', 'protein',
-        'fat', 'sodium', 'fiber', 'is_active', 'modified_by'
+        'slug',
+        'recipe_id',
+        'name',
+        'instruction',
+        'quantity',
+        'unit_id',
+        'calories',
+        'carbohydrate',
+        'protein',
+        'fat',
+        'sodium',
+        'fiber',
+        'is_active',
+        'modified_by'
     ];
 
     protected static function boot()
@@ -26,5 +38,10 @@ class Ingredient extends Model
         static::updating(function ($model) {
             $model->modified_by = 'system';
         });
+    }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class, 'recipe_id');
     }
 }

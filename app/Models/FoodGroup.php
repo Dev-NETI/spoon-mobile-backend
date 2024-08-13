@@ -24,4 +24,9 @@ class FoodGroup extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function food_group_list_item()
+    {
+        return $this->hasMany(FoodGroupListItem::class, 'food_group_id');
+    }
 }

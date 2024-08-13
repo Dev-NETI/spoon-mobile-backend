@@ -24,4 +24,9 @@ class Procedure extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function recipe()
+    {
+        return $this->belongsTo(recipe::class, 'recipe_id');
+    }
 }
