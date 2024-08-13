@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
+use Exception;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
@@ -36,5 +37,25 @@ class RecipeController extends Controller
         }
 
         return response()->json($recipeData);
+    }
+
+    public function showRecipeByFoodGroup($foodGroupId)
+    {
+        try {
+            $recipeData = Recipe::whereHas('food_group_list_item', function ($query) use ($foodGroupId) {
+                $query->where('food_group_id', $foodGroupId);
+            })
+                ->where('is_active', 1)
+                ->orderBy('name', 'asc')
+                ->get();
+
+            if (!$recipeData) {
+                return response()->json(false);
+            }
+
+            return response()->json($recipeData);
+        } catch (Exception $e) {
+            return response()->json(false);
+        }
     }
 }

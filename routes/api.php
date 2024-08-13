@@ -67,6 +67,8 @@ Route::resource('/recipe', RecipeController::class)->only([
     'index',
     'show'
 ]);
+Route::get('/recipe/food-group/{foodGroupId}', [RecipeController::class, 'showRecipeByFoodGroup']);
+
 Route::resource('/meal-log-item', MealLogItemController::class)->only([
     'store'
 ]);
