@@ -10,7 +10,10 @@ class RecipeController extends Controller
 {
     public function index()
     {
-        $recipeData = Recipe::where('is_active', 1)->orderBy('name', 'asc')->get();
+        $recipeData = Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
+            ->where('is_active', 1)
+            ->orderBy('name', 'asc')
+            ->get();
 
         if (!$recipeData) {
             return response()->json(false);

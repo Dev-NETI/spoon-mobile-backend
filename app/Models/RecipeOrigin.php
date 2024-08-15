@@ -24,4 +24,9 @@ class RecipeOrigin extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function recipe()
+    {
+        return $this->hasMany(Recipe::class, 'recipe_origin_id');
+    }
 }

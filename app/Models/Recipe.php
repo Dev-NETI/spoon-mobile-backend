@@ -44,6 +44,11 @@ class Recipe extends Model
         });
     }
 
+    public function recipe_origin()
+    {
+        return $this->belongsTo(RecipeOrigin::class, 'recipe_origin_id');
+    }
+
     public function recipe_rank_list_item()
     {
         return $this->hasMany(RecipeRankListItem::class, 'recipe_id', 'id');

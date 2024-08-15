@@ -8,11 +8,14 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DietaryReferenceValueController;
 use App\Http\Controllers\FoodGroupController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\MealLogItemController;
+use App\Http\Controllers\MealTypeController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeOriginController;
+use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +68,7 @@ Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
 
 Route::resource('/recipe', RecipeController::class)->only([
     'index',
-    'show'
+    'show',
 ]);
 Route::get('/recipe/food-group/{foodGroupId}', [RecipeController::class, 'showRecipeByFoodGroup']);
 
@@ -80,5 +83,17 @@ Route::resource('/dietary-reference-value', DietaryReferenceValueController::cla
 ]);
 
 Route::resource('/activity-level', ActivityLevelController::class)->only([
+    'index'
+]);
+
+Route::resource('/meal', MealController::class)->only([
+    'index'
+]);
+
+Route::resource('/meal-type', MealTypeController::class)->only([
+    'index'
+]);
+
+Route::resource('/season', SeasonController::class)->only([
     'index'
 ]);
