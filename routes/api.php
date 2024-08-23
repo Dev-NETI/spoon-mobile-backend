@@ -15,6 +15,7 @@ use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeOriginController;
+use App\Http\Controllers\SavedRecipeController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -97,3 +98,9 @@ Route::resource('/meal-type', MealTypeController::class)->only([
 Route::resource('/season', SeasonController::class)->only([
     'index'
 ]);
+
+Route::resource('/saved-recipe', SavedRecipeController::class)->only([
+    'store'
+]);
+Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::class, 'showSavedRecipe']);
+Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
