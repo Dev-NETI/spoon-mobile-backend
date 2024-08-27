@@ -165,4 +165,27 @@ class UserController extends Controller
             return  response()->json(false);
         }
     }
+
+    public function updateFirstLogin($slug)
+    {
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return  response()->json(false);
+            }
+
+            $update = $userData->update([
+                'is_first_login' => 0,
+            ]);
+
+            if (!$update) {
+                return  response()->json(false);
+            }
+
+            return  response()->json(true);
+        } catch (Exception $e) {
+            return  response()->json(false);
+        }
+    }
 }
