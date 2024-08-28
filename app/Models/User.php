@@ -42,7 +42,7 @@ class User extends Authenticatable
         'gender_id',
         'is_first_login',
     ];
-    protected $with = ['activity_level'];
+    protected $with = ['activity_level', 'bmi_log'];
 
     protected static function boot()
     {
