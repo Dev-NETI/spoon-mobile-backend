@@ -20,7 +20,8 @@ class SavedRecipeController extends Controller
                 'b.name',
                 'b.image_path AS recipe_img',
                 'c.name AS origin_name',
-                'c.image_path'
+                'c.image_path',
+                'b.slug',
             ])
             ->get();
 
@@ -39,7 +40,8 @@ class SavedRecipeController extends Controller
                 'b.name',
                 'b.image_path AS recipe_img',
                 'c.name AS origin_name',
-                'c.image_path'
+                'c.image_path',
+                'b.slug',
             ])
             ->get();
 
