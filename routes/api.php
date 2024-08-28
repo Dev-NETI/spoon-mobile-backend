@@ -15,6 +15,7 @@ use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeOriginController;
+use App\Http\Controllers\SavedRecipeController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -32,6 +33,9 @@ Route::get('/check-status-email', [AuthController::class, 'checkStatusEmail']);
 
 Route::resource('/company', CompanyController::class)->only([
     'index',
+]);
+Route::resource('/saved-recipe', SavedRecipeController::class)->only([
+    'index','show',
 ]);
 Route::resource('/category', CategoryController::class)->only([
     'index',
