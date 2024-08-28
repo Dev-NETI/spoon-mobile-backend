@@ -59,6 +59,7 @@ Route::resource('/user', UserController::class)->only([
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
 Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'updateCalorieIntake']);
+Route::patch('/user/update-first-login/{slug}', [UserController::class, 'updateFirstLogin']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
     'store',
@@ -101,3 +102,9 @@ Route::resource('/meal-type', MealTypeController::class)->only([
 Route::resource('/season', SeasonController::class)->only([
     'index'
 ]);
+
+Route::resource('/saved-recipe', SavedRecipeController::class)->only([
+    'store'
+]);
+Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::class, 'showSavedRecipe']);
+Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);

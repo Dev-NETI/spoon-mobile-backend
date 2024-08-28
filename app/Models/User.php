@@ -40,6 +40,7 @@ class User extends Authenticatable
         'calorie_intake',
         'activity_level_id',
         'gender_id',
+        'is_first_login',
     ];
     protected $with = ['activity_level'];
 
