@@ -36,7 +36,8 @@ Route::resource('/company', CompanyController::class)->only([
     'index',
 ]);
 Route::resource('/saved-recipe', SavedRecipeController::class)->only([
-    'index','show',
+    'index',
+    'show',
 ]);
 Route::resource('/category', CategoryController::class)->only([
     'index',
@@ -56,6 +57,7 @@ Route::resource('/recipe-origin', RecipeOriginController::class)->only([
 
 Route::resource('/user', UserController::class)->only([
     'store',
+    'index',
 ]);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);

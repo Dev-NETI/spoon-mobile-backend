@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $userData = User::orderBy('created_at', 'desc')->get();
+        if (!$userData) {
+            return response()->json(false);
+        }
+        return response()->json($userData);
+    }
+
     public function store(Request $request)
     {
         // $request->validate([
