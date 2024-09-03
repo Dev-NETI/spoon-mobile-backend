@@ -9,9 +9,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function showAll()
     {
         $userData = User::orderBy('created_at', 'desc')->get();
+        if (!$userData) {
+            return response()->json(false);
+        }
+        return response()->json($userData);
+    }
+
+    public function show($slug)
+    {
+        $userData = User::where('slug', $slug)->first();
         if (!$userData) {
             return response()->json(false);
         }
@@ -195,6 +204,76 @@ class UserController extends Controller
             return  response()->json(true);
         } catch (Exception $e) {
             return  response()->json(false);
+        }
+    }
+
+    public function updateBasicInformation($slug, Request $request)
+    {
+        $request->validate([
+            "firstname" =>  "required|string|max:255",
+            "middlename" =>  "nullable|string|max:255",
+            "lastname" =>  "required|string|max:255",
+            "email" =>  "required|email|max:255",
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return response()->json(false);
+            }
+
+            $update = $userData->update([
+                'firstname' => $request['firstname'],
+                'middlename' => $request['middlename'],
+                'lastname' => $request['lastname'],
+                'suffix' => $request['suffix'],
+                'email' => $request['email'],
+            ]);
+
+            if (!$update) {
+                return response()->json(false);
+            }
+
+            return response()->json(true);
+        } catch (Exception $e) {
+            return response()->json(false);
+        }
+    }
+
+    public function updatePassword($slug, Request $request)
+    {
+        $request->validate([
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:255',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*?&#]/'
+            ],
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return response()->json(false);
+            }
+
+            $update = $userData->update([
+                'password' => Hash::make($request['password']),
+            ]);
+
+            if (!$update) {
+                return response()->json(false);
+            }
+
+            return response()->json(true);
+        } catch (Exception $e) {
+            return response()->json(false);
         }
     }
 }

@@ -57,12 +57,15 @@ Route::resource('/recipe-origin', RecipeOriginController::class)->only([
 
 Route::resource('/user', UserController::class)->only([
     'store',
-    'index',
+    'show',
 ]);
+Route::get('/users/get-all-user', [UserController::class, 'showAll']);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
 Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'updateCalorieIntake']);
 Route::patch('/user/update-first-login/{slug}', [UserController::class, 'updateFirstLogin']);
+Route::patch('/user/update-basic-information/{slug}', [UserController::class, 'updateBasicInformation']);
+Route::patch('/user/update-password/{slug}', [UserController::class, 'updatePassword']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
     'store',
