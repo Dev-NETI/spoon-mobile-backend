@@ -26,8 +26,11 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/verify-one-time-pin', [AuthController::class, 'verifyOTP']);
+});
+
 Route::post('/authenticating', [AuthController::class, 'authenticating']);
-Route::post('/verify-otp', [AuthController::class, 'verifyOTP']);
 Route::get('/checking-status-otp', [AuthController::class, 'checkingStatusOTP']);
 Route::post('/check-register-email', [AuthController::class, 'checkRegisterEmail']);
 Route::get('/check-status-email', [AuthController::class, 'checkStatusEmail']);
