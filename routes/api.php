@@ -7,6 +7,7 @@ use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DietaryReferenceValueController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FoodGroupController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MealLogItemController;
@@ -119,3 +120,5 @@ Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::cla
 Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
 
 Route::resource('/recipe-review', RecipeReviewController::class)->only(['store', 'show']);
+
+Route::get('/email/send-verification-code/{verificationCode}/{email}', [EmailController::class, 'sendVerificationCode']);
