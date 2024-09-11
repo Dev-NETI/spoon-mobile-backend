@@ -22,6 +22,19 @@ class RecipeController extends Controller
         return response()->json($recipeData);
     }
 
+    public function AllRecipe()
+    {
+        $recipeData = Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
+            ->orderBy('name', 'asc')
+            ->get();
+
+        if (!$recipeData) {
+            return response()->json(false);
+        }
+
+        return response()->json($recipeData);
+    }
+
     public function show($slug)
     {
         $recipeData = Recipe::with([
