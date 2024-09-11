@@ -74,10 +74,14 @@ Route::resource('/blood-pressure', BloodPressureLogController::class)->only([
     'show'
 ]);
 
+Route::get('/recipe/all-recipe', [RecipeController::class, 'AllRecipe']);
+
 Route::resource('/recipe', RecipeController::class)->only([
     'index',
     'show',
 ]);
+
+
 Route::get('/recipe/food-group/{foodGroupId}', [RecipeController::class, 'showRecipeByFoodGroup']);
 
 Route::resource('/meal-log-item', MealLogItemController::class)->only([
