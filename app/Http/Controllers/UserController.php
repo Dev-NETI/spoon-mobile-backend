@@ -276,4 +276,46 @@ class UserController extends Controller
             return response()->json(false);
         }
     }
+
+    public function updatePersonalInformation($slug, Request $request)
+    {
+        $request->validate([
+            "firstname" =>  "required|string|max:255",
+            "middlename" =>  "nullable|string|max:255",
+            "lastname" =>  "required|string|max:255",
+            "company" => 'required',
+            "rank" => 'required',
+            "category" => 'required',
+            "nationality" => 'required',
+            "gender" => 'required',
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return response()->json(false);
+            }
+
+            $update = $userData->update([
+                'firstname' => $request['firstname'],
+                'middlename' => $request['middlename'],
+                'lastname' => $request['lastname'],
+                'suffix' => $request['suffix'],
+                'company' => $request['company'],
+                'rank_id' => $request['rank'],
+                'category_id' => $request['category'],
+                'nationality_id' => $request['nationality'],
+                'gender_i' => $request['gender'],
+            ]);
+
+            if (!$update) {
+                return response()->json(false);
+            }
+
+            return response()->json(true);
+        } catch (Exception $e) {
+            return response()->json(false);
+        }
+    }
 }

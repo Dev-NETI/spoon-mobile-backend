@@ -24,4 +24,9 @@ class Nationality extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'nationality_id');
+    }
 }

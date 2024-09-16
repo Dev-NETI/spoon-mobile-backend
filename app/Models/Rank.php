@@ -24,4 +24,9 @@ class Rank extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'rank_id');
+    }
 }
