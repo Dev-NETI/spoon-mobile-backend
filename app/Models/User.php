@@ -42,7 +42,7 @@ class User extends Authenticatable
         'gender_id',
         'is_first_login',
     ];
-    protected $with = ['activity_level', 'bmi_log'];
+    protected $with = ['activity_level', 'bmi_log', 'category', 'rank', 'nationality', 'company'];
 
     protected static function boot()
     {
@@ -110,5 +110,25 @@ class User extends Authenticatable
     public function activity_level()
     {
         return $this->belongsTo(ActivityLevel::class, 'activity_level_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(Rank::class, 'rank_id');
+    }
+
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class, 'nationality_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company');
     }
 }

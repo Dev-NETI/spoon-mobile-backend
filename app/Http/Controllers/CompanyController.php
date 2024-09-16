@@ -9,6 +9,6 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return response()->json(Company::where('is_active',1)->orderBy('name','asc')->get());
+        return response()->json(Company::where('is_active', 1)->orderBy('name', 'asc')->get());
     }
 }

@@ -64,6 +64,7 @@ Route::resource('/user', UserController::class)->only([
     'show',
 ]);
 Route::get('/users/get-all-user', [UserController::class, 'showAll']);
+Route::patch('/user/update-personal-information/{slug}', [UserController::class, 'updatePersonalInformation']);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
 Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'updateCalorieIntake']);

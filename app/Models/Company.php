@@ -24,4 +24,9 @@ class Company extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function company()
+    {
+        return $this->hasMany(Company::class, 'company');
+    }
 }
