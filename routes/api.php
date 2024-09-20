@@ -6,6 +6,7 @@ use App\Http\Controllers\BloodPressureLogController;
 use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DietaryReferenceValueController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FoodGroupController;
@@ -127,3 +128,5 @@ Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeControlle
 Route::resource('/recipe-review', RecipeReviewController::class)->only(['store', 'show']);
 
 Route::get('/email/send-verification-code/{verificationCode}/{email}', [EmailController::class, 'sendVerificationCode']);
+
+Route::get('/dashboard/bmi-data/{weightClass}', [DashboardController::class,'showBmiAnalytics']);
