@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DialingCode;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -68,6 +70,8 @@ class UserController extends Controller
                 'category_id' => $request['category'],
                 'rank_id' => $request['rank'],
                 'email' => $request['email'],
+                'dialing_code_id' => $request['dialingCodeId'],
+                'contact_number' => $request['contactNum'],
                 'password' => Hash::make($request['confirmPassword']),
             ]);
 
@@ -310,6 +314,25 @@ class UserController extends Controller
             ]);
 
             if (!$update) {
+                return response()->json(false);
+            }
+
+            return response()->json(true);
+        } catch (Exception $e) {
+            return response()->json(false);
+        }
+    }
+
+    public function checkContactNumber($contactNumber,$dialingCode = null)
+    {
+        try {
+            $contactNumberData = User::where('contact_number',$contactNumber)->first();
+            $dialingCodeData = DialingCode::where('id', $dialingCode)->first();
+            Session::put('dialingCodeId', $dialingCodeData->id);
+            Session::put('dialingCode', $dialingCodeData->dialing_code);
+
+            if(!$contactNumberData){
+                Session::put('contactNum', $contactNumber);
                 return response()->json(false);
             }
 

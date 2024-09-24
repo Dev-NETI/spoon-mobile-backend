@@ -7,6 +7,7 @@ use App\Http\Controllers\BmiLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DialingCodeController;
 use App\Http\Controllers\DietaryReferenceValueController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FoodGroupController;
@@ -72,6 +73,7 @@ Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'upda
 Route::patch('/user/update-first-login/{slug}', [UserController::class, 'updateFirstLogin']);
 Route::patch('/user/update-basic-information/{slug}', [UserController::class, 'updateBasicInformation']);
 Route::patch('/user/update-password/{slug}', [UserController::class, 'updatePassword']);
+Route::get('/user/check-contact-number/{contactNumber}/{dialingCode}', [UserController::class, 'checkContactNumber']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
     'store',
@@ -127,6 +129,10 @@ Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeControlle
 
 Route::resource('/recipe-review', RecipeReviewController::class)->only(['store', 'show']);
 
-Route::get('/email/send-verification-code/{verificationCode}/{email}', [EmailController::class, 'sendVerificationCode']);
+Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumber}', [EmailController::class, 'sendVerificationCode']);
 
-Route::get('/dashboard/bmi-data/{weightClass}', [DashboardController::class,'showBmiAnalytics']);
+Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class,'showBmiAnalytics']);
+
+Route::resource('/dialing-code', DialingCodeController::class)->only([
+    'index'
+]);
