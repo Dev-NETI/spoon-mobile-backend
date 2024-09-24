@@ -41,8 +41,11 @@ class User extends Authenticatable
         'activity_level_id',
         'gender_id',
         'is_first_login',
+        'user_type_id',
+        'contact_number',
+        'dialing_code_id',
     ];
-    protected $with = ['activity_level', 'bmi_log', 'category', 'rank', 'nationality', 'company'];
+    protected $with = ['activity_level', 'bmi_log', 'category', 'rank', 'nationality', 'company','dialing_code'];
 
     protected static function boot()
     {
@@ -130,5 +133,10 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class, 'company');
+    }
+
+    public function dialing_code()
+    {
+        return $this->belongsTo(DialingCode::class,'dialing_code_id');
     }
 }

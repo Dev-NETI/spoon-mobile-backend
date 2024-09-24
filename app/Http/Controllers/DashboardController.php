@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function showBmiAnalytics($weightClass = 1)//weightClass 1 = underweight, 2 = overweight, 3 = obese
+    public function showBmiAnalytics($weightClass = 1, $userTypeId = 1 , $companyId = 73)//weightClass 1 = underweight, 2 = overweight, 3 = obese
     {
         try {
             $alreadyFetchedUserIds = [];
@@ -31,6 +31,12 @@ class DashboardController extends Controller
                     $query->where('bmi', '>=', 30)
                           ->orderBy('bmi', 'desc');
                     break;
+            }
+
+            if($userTypeId == 2 || $userTypeId == 1){
+                $query->whereHas('user', function($subQuery) use ($companyId){
+                    $subQuery->where('company',$companyId);
+                });
             }
 
             $bmiData = $query->distinct('user_id') 
