@@ -74,6 +74,7 @@ Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'upda
 Route::patch('/user/update-first-login/{slug}', [UserController::class, 'updateFirstLogin']);
 Route::patch('/user/update-basic-information/{slug}', [UserController::class, 'updateBasicInformation']);
 Route::patch('/user/update-password/{slug}', [UserController::class, 'updatePassword']);
+Route::patch('/user/update-contact-information/{slug}', [UserController::class, 'updateContactInformation']);
 Route::get('/user/check-contact-number/{contactNumber}/{dialingCode}', [UserController::class, 'checkContactNumber']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
@@ -140,5 +141,5 @@ Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumb
 Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
 
 Route::resource('/dialing-code', DialingCodeController::class)->only([
-    'index'
+    'index','show'
 ]);

@@ -16,4 +16,10 @@ class DialingCodeController extends Controller
         }
         return response()->json($dialingCodeData);
     }
+
+    public function show($dialingCodeId)
+    {
+        $dialingCode = DialingCode::select('dialing_code')->where('id',$dialingCodeId)->first();
+        return response()->json($dialingCode);
+    }
 }

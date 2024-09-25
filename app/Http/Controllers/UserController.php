@@ -341,4 +341,35 @@ class UserController extends Controller
             return response()->json(false);
         }
     }
+
+    public function updateContactInformation($slug, Request $request)
+    {
+        $request->validate([
+            "email" =>  "required",
+            "dialingCodeId" =>  "required",
+            "contactNumber" =>  "required",
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return  response()->json(false);
+            }
+
+            $update = $userData->update([
+                'email' => $request['email'],
+                'dialing_code_id' => $request['dialingCodeId'],
+                'contact_number' => $request['contactNumber'],
+            ]);
+
+            if (!$update) {
+                return  response()->json(false);
+            }
+
+            return  response()->json(true);
+        } catch (Exception $e) {
+            return  response()->json(false);
+        }
+    }
 }
