@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function showAll()
+    public function showAll($userTypeId,$company)
     {
-        $userData = User::orderBy('created_at', 'desc')->get();
+        $query = User::query();
+
+        if($userTypeId == 2){
+            $query->where('company',$company);
+        }
+
+        $userData = $query->orderBy('created_at', 'desc')->get();
+
         if (!$userData) {
             return response()->json(false);
         }
