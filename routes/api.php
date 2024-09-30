@@ -21,6 +21,7 @@ use App\Http\Controllers\RecipeOriginController;
 use App\Http\Controllers\RecipeReviewController;
 use App\Http\Controllers\SavedRecipeController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -91,8 +92,8 @@ Route::get('/recipe/all-recipe', [RecipeController::class, 'AllRecipe']);
 Route::resource('/recipe', RecipeController::class)->only([
     'index',
     'show',
+    'store'
 ]);
-
 
 Route::get('/recipe/food-group/{foodGroupId}', [RecipeController::class, 'showRecipeByFoodGroup']);
 
@@ -125,6 +126,11 @@ Route::resource('/season', SeasonController::class)->only([
 Route::resource('/saved-recipe', SavedRecipeController::class)->only([
     'store'
 ]);
+
+Route::resource('/unit', UnitController::class)->only([
+    'index'
+]);
+
 Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::class, 'showSavedRecipe']);
 Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
 
