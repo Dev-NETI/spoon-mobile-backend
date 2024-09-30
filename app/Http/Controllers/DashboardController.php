@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BmiLog;
+use App\Models\RecipeReview;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -52,6 +53,28 @@ class DashboardController extends Controller
             return response()->json(false);
         }
         
+    }
+
+    public function showTopTenRatedRecipe()
+    {
+        
+                    try {
+                        $topRecipes = RecipeReview::select('recipe_id')
+                                        ->selectRaw('AVG(rating) as average_rating')
+                                        ->groupBy('recipe_id')
+                                        ->orderByDesc('average_rating')
+                                        ->limit(10)
+                                        ->with(['recipe'])
+                                        ->get();
+            
+                        if (!$topRecipes) {
+                            return response()->json(false);
+                        }
+            
+                        return response()->json($topRecipes);
+                    } catch (Exception $e) {
+                        return response()->json(false);
+                    }
     }
 
 }
