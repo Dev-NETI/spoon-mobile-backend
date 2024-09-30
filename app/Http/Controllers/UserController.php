@@ -225,6 +225,7 @@ class UserController extends Controller
             "middlename" =>  "nullable|string|max:255",
             "lastname" =>  "required|string|max:255",
             "email" =>  "required|email|max:255",
+            "userTypeId" =>  "required",
         ]);
 
         try {
@@ -240,6 +241,7 @@ class UserController extends Controller
                 'lastname' => $request['lastname'],
                 'suffix' => $request['suffix'],
                 'email' => $request['email'],
+                'user_type_id' => $request['userTypeId'],
             ]);
 
             if (!$update) {
