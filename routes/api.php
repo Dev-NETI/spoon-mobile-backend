@@ -25,6 +25,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageUploadController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -142,3 +143,5 @@ Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [Dashbo
 Route::resource('/dialing-code', DialingCodeController::class)->only([
     'index'
 ]);
+
+Route::post('/upload-image', [ImageUploadController::class, 'upload']);
