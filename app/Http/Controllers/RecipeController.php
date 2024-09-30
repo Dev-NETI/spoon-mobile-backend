@@ -77,28 +77,31 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        // return response()->json($request->all());
-
-        // $request->validate([
-        //     'recipe_name' => 'required|string',
-        //     'meal_type_id' => 'required|integer|min:1',
-        //     'number_of_serving' => 'required|integer|min:1',
-        //     'recipe_origin_id' => 'required|integer|min:1',
-        //     'breakfast' => 'required|integer|in:0,1',
-        //     'lunch' => 'required|integer|in:0,1',
-        //     'dinner' => 'required|integer|in:0,1',
-        //     'ingredients' => 'required|array',
-        //     'ingredients.*.ingredient' => 'required|string',
-        //     'ingredients.*.calories' => 'required|integer|min:0',
-        //     'ingredients.*.carbohydrate' => 'required|integer|min:0',
-        //     'ingredients.*.protein' => 'required|integer|min:0',
-        //     'ingredients.*.fat' => 'required|integer|min:0',
-        //     'ingredients.*.sodium' => 'required|integer|min:0',
-        //     'ingredients.*.fiber' => 'required|integer|min:0',
-        //     'instructions' => 'required|array',
-        //     'instructions.*.number' => 'required|integer|min:1',
-        //     'instructions.*.description' => 'required|string',
-        // ]);
+        $request->validate([
+            'recipe_name' => 'required|string|min:2',
+            'meal_type_id' => 'required|integer|min:1',
+            'number_of_serving' => 'required|integer|min:1',
+            'recipe_origin_id' => 'required|integer|min:1',
+            'breakfast' => 'nullable|integer',
+            'lunch' => 'nullable|integer',
+            'snack' => 'nullable|integer',
+            'dinner' => 'nullable|integer',
+            'ingredients' => 'required|array',
+            'ingredients.*.name' => 'required|string',
+            'ingredients.*.instruction' => 'required|string',
+            'ingredients.*.unit_id' => 'required|integer|min:1',
+            'ingredients.*.quantity' => 'required|integer|min:1',
+            'ingredients.*.calories' => 'nullable|integer',
+            'ingredients.*.carbohydrate' => 'nullable|integer',
+            'ingredients.*.protein' => 'nullable|integer',
+            'ingredients.*.fat' => 'nullable|integer',
+            'ingredients.*.sodium' => 'nullable|integer',
+            'ingredients.*.fiber' => 'nullable|integer',
+            'instructions' => 'required|array',
+            'instructions.*.number' => 'required|integer',
+            'instructions.*.description' => 'required|string',
+            'image_url' => 'nullable|url',
+        ]);
 
         try {
 
@@ -133,6 +136,7 @@ class RecipeController extends Controller
                 'fat' => $fat,
                 'sodium' => $sodium,
                 'fiber' => $fiber,
+                'image_path' => $request['image_path'], // Make sure this line is present
             ]);
 
             if (!$store) {
@@ -143,6 +147,8 @@ class RecipeController extends Controller
                 $store->ingredient()->create([
                     'name' => $value['name'],
                     'instruction' => $value['instruction'],
+                    'quantity' => $value['quantity'],
+                    'unit_id' => $value['unit_id'],
                     'calories' => $value['calories'],
                     'carbohydrate' => $value['carbohydrate'],
                     'protein' => $value['protein'],
@@ -159,9 +165,9 @@ class RecipeController extends Controller
                 ]);
             }
 
-            return  response()->json(true);
+            return  response()->json(true, 200);
         } catch (Exception $e) {
-            return  response()->json(false);
+            return  response()->json(false, 500);
         }
     }
 }
