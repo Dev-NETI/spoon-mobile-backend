@@ -120,9 +120,18 @@ Route::resource('/meal', MealController::class)->only([
     'index'
 ]);
 
+Route::get('/meal-type/all-meal-type', [MealTypeController::class, 'AllMealType']);
+
 Route::resource('/meal-type', MealTypeController::class)->only([
-    'index'
+    'index',
+    'store',
+    'show',
+    'update',
+    'destroy'
 ]);
+
+Route::patch('/meal-type/activate/{slug}', [MealTypeController::class, 'ActivateMealType']);
+
 
 Route::resource('/season', SeasonController::class)->only([
     'index'

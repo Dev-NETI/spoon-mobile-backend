@@ -45,7 +45,7 @@ class User extends Authenticatable
         'contact_number',
         'dialing_code_id',
     ];
-    protected $with = ['activity_level', 'bmi_log', 'category', 'rank', 'nationality', 'company','dialing_code'];
+    protected $with = ['activity_level', 'bmi_log', 'category', 'rank', 'nationality', 'company', 'dialing_code'];
 
     protected static function boot()
     {
@@ -137,6 +137,19 @@ class User extends Authenticatable
 
     public function dialing_code()
     {
-        return $this->belongsTo(DialingCode::class,'dialing_code_id');
+        return $this->belongsTo(DialingCode::class, 'dialing_code_id');
+    }
+
+    public function formal_name()
+    {
+        return $this->firstname . ' ' . $this->middlename . ' ' . $this->lastname . ' ' . $this->suffix;
+    }
+
+    public function getFullNameAttribute()
+    {
+        $middleInitial = $this->middlename ? strtoupper(substr($this->middlename, 0, 1)) . '.' : '';
+        $suffix = $this->suffix ? ' AND ' . strtoupper($this->suffix) : '';
+
+        return strtoupper($this->firstname . ' ' . $middleInitial . ' ' . $this->lastname) . $suffix;
     }
 }
