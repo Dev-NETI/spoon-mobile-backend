@@ -26,6 +26,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
+use Illuminate\Support\Facades\Storage;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -92,8 +93,12 @@ Route::get('/recipe/all-recipe', [RecipeController::class, 'AllRecipe']);
 Route::resource('/recipe', RecipeController::class)->only([
     'index',
     'show',
-    'store'
+    'store',
+    'update',
+    'destroy',
 ]);
+
+Route::patch('/recipe/activate/{slug}', [RecipeController::class, 'ActivateRecipe']);
 
 Route::get('/recipe/food-group/{foodGroupId}', [RecipeController::class, 'showRecipeByFoodGroup']);
 
@@ -145,3 +150,13 @@ Route::resource('/dialing-code', DialingCodeController::class)->only([
 ]);
 
 Route::post('/upload-image', [ImageUploadController::class, 'upload']);
+
+Route::get('/storage/{filename}', function ($filename) {
+    $path = storage_path('app/public/' . $filename);
+
+    if (!Storage::exists('public/' . $filename)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->where('filename', '.*');

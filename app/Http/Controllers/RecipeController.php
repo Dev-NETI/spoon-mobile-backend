@@ -22,37 +22,22 @@ class RecipeController extends Controller
         return response()->json($recipeData);
     }
 
-    public function AllRecipe()
-    {
-        $recipeData = Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
-            ->orderBy('name', 'asc')
-            ->get();
-
-        if (!$recipeData) {
-            return response()->json(false);
-        }
-
-        return response()->json($recipeData);
-    }
-
     public function show($slug)
     {
-        $recipeData = Recipe::with([
-            'meal_type',
-            'food_group_list_item.food_group',
-            'season_list_item.season',
-            'ingredient',
-            'procedure',
-        ])
-            ->where('slug', $slug)
-            ->where('is_active', 1)
-            ->first();
+        try {
+            $recipe = Recipe::with([
+                'meal_type',
+                'recipe_origin',
+                'food_group_list_item.food_group',
+                'season_list_item.season',
+                'ingredient',
+                'procedure'
+            ])->where('slug', $slug)->firstOrFail();
 
-        if (!$recipeData) {
-            return response()->json(false);
+            return response()->json($recipe);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Recipe not found'], 404);
         }
-
-        return response()->json($recipeData);
     }
 
     public function showRecipeByFoodGroup($foodGroupId)
@@ -78,7 +63,7 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'recipe_name' => 'required|string|min:2',
+            'name' => 'required|string|min:2',
             'meal_type_id' => 'required|integer|min:1',
             'number_of_serving' => 'required|integer|min:1',
             'recipe_origin_id' => 'required|integer|min:1',
@@ -100,7 +85,7 @@ class RecipeController extends Controller
             'instructions' => 'required|array',
             'instructions.*.number' => 'required|integer',
             'instructions.*.description' => 'required|string',
-            'image_url' => 'nullable|url',
+            'image_path' => 'nullable',
         ]);
 
         try {
@@ -122,7 +107,7 @@ class RecipeController extends Controller
             }
 
             $store = Recipe::create([
-                'name' => $request['recipe_name'],
+                'name' => $request['name'],
                 'meal_type_id' => $request['meal_type_id'],
                 'number_of_serving' => $request['number_of_serving'],
                 'recipe_origin_id' => $request['recipe_origin_id'],
@@ -168,6 +153,122 @@ class RecipeController extends Controller
             return  response()->json(true, 200);
         } catch (Exception $e) {
             return  response()->json(false, 500);
+        }
+    }
+
+    public function update(Request $request, $slug)
+    {
+        try {
+            $recipe = Recipe::where('slug', $slug)->firstOrFail();
+
+            // Validate the request data
+            $validatedData =  $request->validate([
+                'name' => 'required|string|min:2',
+                'meal_type_id' => 'required|integer|min:1',
+                'number_of_serving' => 'required|integer|min:1',
+                'recipe_origin_id' => 'required|integer|min:1',
+                'breakfast' => 'nullable|integer',
+                'lunch' => 'nullable|integer',
+                'snack' => 'nullable|integer',
+                'dinner' => 'nullable|integer',
+                'ingredients' => 'required|array',
+                'ingredients.*.name' => 'required|string',
+                'ingredients.*.instruction' => 'required|string',
+                'ingredients.*.unit_id' => 'required|integer|min:1',
+                'ingredients.*.quantity' => 'required|integer|min:1',
+                'ingredients.*.calories' => 'nullable|integer',
+                'ingredients.*.carbohydrate' => 'nullable|integer',
+                'ingredients.*.protein' => 'nullable|integer',
+                'ingredients.*.fat' => 'nullable|integer',
+                'ingredients.*.sodium' => 'nullable|integer',
+                'ingredients.*.fiber' => 'nullable|integer',
+                'instructions' => 'required|array',
+                'instructions.*.number' => 'required|integer',
+                'instructions.*.description' => 'required|string',
+                'image_path' => 'nullable',
+            ]);
+
+            // Update the recipe
+            $recipe->update($validatedData);
+
+            // Calculate total nutritional values
+            $totalCalories = 0;
+            $totalCarbohydrate = 0;
+            $totalProtein = 0;
+            $totalFat = 0;
+            $totalSodium = 0;
+            $totalFiber = 0;
+
+            // Update or create ingredients
+            $recipe->ingredient()->delete();
+            foreach ($validatedData['ingredients'] as $ingredientData) {
+                $recipe->ingredient()->create($ingredientData);
+
+                // Sum up nutritional values
+                $totalCalories += $ingredientData['calories'];
+                $totalCarbohydrate += $ingredientData['carbohydrate'];
+                $totalProtein += $ingredientData['protein'];
+                $totalFat += $ingredientData['fat'];
+                $totalSodium += $ingredientData['sodium'];
+                $totalFiber += $ingredientData['fiber'];
+            }
+
+            // Update recipe with total nutritional values
+            $recipe->update([
+                'calories' => $totalCalories,
+                'carbohydrate' => $totalCarbohydrate,
+                'protein' => $totalProtein,
+                'fat' => $totalFat,
+                'sodium' => $totalSodium,
+                'fiber' => $totalFiber,
+            ]);
+
+            // Update or create instructions
+            $recipe->procedure()->delete();
+            foreach ($validatedData['instructions'] as $instructionData) {
+                $recipe->procedure()->create($instructionData);
+            }
+
+            return response()->json($recipe->load(['meal_type', 'recipe_origin', 'ingredient', 'procedure']));
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy($slug)
+    {
+        try {
+            $recipe = Recipe::where('slug', $slug)->firstOrFail();
+            $recipe->is_active = 0;
+            $recipe->save();
+            return response()->json(true);
+        } catch (Exception $e) {
+            return response()->json(false);
+        }
+    }
+
+    public function AllRecipe()
+    {
+        $recipeData = Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
+            ->orderBy('name', 'asc')
+            ->get();
+
+        if (!$recipeData) {
+            return response()->json(false);
+        }
+
+        return response()->json($recipeData);
+    }
+
+    public function ActivateRecipe($slug)
+    {
+        try {
+            $recipe = Recipe::where('slug', $slug)->firstOrFail();
+            $recipe->is_active = 1;
+            $recipe->save();
+            return response()->json(['message' => 'Recipe activated successfully'], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to activate recipe'], 500);
         }
     }
 }
