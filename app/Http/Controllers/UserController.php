@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function showAll()
+    public function showAll($userTypeId,$company)
     {
-        $userData = User::orderBy('created_at', 'desc')->get();
+        $query = User::query();
+
+        if($userTypeId == 2){
+            $query->where('company',$company);
+        }
+
+        $userData = $query->orderBy('created_at', 'desc')->get();
+
         if (!$userData) {
             return response()->json(false);
         }
@@ -218,6 +225,7 @@ class UserController extends Controller
             "middlename" =>  "nullable|string|max:255",
             "lastname" =>  "required|string|max:255",
             "email" =>  "required|email|max:255",
+            "userTypeId" =>  "required",
         ]);
 
         try {
@@ -233,6 +241,7 @@ class UserController extends Controller
                 'lastname' => $request['lastname'],
                 'suffix' => $request['suffix'],
                 'email' => $request['email'],
+                'user_type_id' => $request['userTypeId'],
             ]);
 
             if (!$update) {
@@ -339,6 +348,37 @@ class UserController extends Controller
             return response()->json(true);
         } catch (Exception $e) {
             return response()->json(false);
+        }
+    }
+
+    public function updateContactInformation($slug, Request $request)
+    {
+        $request->validate([
+            "email" =>  "required",
+            "dialingCodeId" =>  "required",
+            "contactNumber" =>  "required",
+        ]);
+
+        try {
+            $userData = User::where('slug', $slug)->first();
+
+            if (!$userData) {
+                return  response()->json(false);
+            }
+
+            $update = $userData->update([
+                'email' => $request['email'],
+                'dialing_code_id' => $request['dialingCodeId'],
+                'contact_number' => $request['contactNumber'],
+            ]);
+
+            if (!$update) {
+                return  response()->json(false);
+            }
+
+            return  response()->json(true);
+        } catch (Exception $e) {
+            return  response()->json(false);
         }
     }
 }

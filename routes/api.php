@@ -68,7 +68,7 @@ Route::resource('/user', UserController::class)->only([
     'store',
     'show',
 ]);
-Route::get('/users/get-all-user', [UserController::class, 'showAll']);
+Route::get('/users/get-all-user/{userTypeId}/{company}', [UserController::class, 'showAll']);
 Route::patch('/user/update-personal-information/{slug}', [UserController::class, 'updatePersonalInformation']);
 Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
 Route::patch('/user/update-data/{slug}', [UserController::class, 'updateDataForEnergyComputation']);
@@ -76,6 +76,7 @@ Route::patch('/user/update-calorie-intake/{slug}', [UserController::class, 'upda
 Route::patch('/user/update-first-login/{slug}', [UserController::class, 'updateFirstLogin']);
 Route::patch('/user/update-basic-information/{slug}', [UserController::class, 'updateBasicInformation']);
 Route::patch('/user/update-password/{slug}', [UserController::class, 'updatePassword']);
+Route::patch('/user/update-contact-information/{slug}', [UserController::class, 'updateContactInformation']);
 Route::get('/user/check-contact-number/{contactNumber}/{dialingCode}', [UserController::class, 'checkContactNumber']);
 
 Route::resource('/bmi-log', BmiLogController::class)->only([
@@ -148,14 +149,16 @@ Route::resource('/unit', UnitController::class)->only([
 Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::class, 'showSavedRecipe']);
 Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
 
+
 Route::resource('/recipe-review', RecipeReviewController::class)->only(['store', 'show']);
 
 Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumber}', [EmailController::class, 'sendVerificationCode']);
 
-Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
+Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class,'showBmiAnalytics']);
+Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
 Route::resource('/dialing-code', DialingCodeController::class)->only([
-    'index'
+    'index','show'
 ]);
 
 Route::post('/upload-image', [ImageUploadController::class, 'upload']);
