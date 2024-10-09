@@ -35,7 +35,7 @@
                 <tbody>
                     <tr style="height: 0;">
                         <td>
-                            <span style="font-size: 16px; line-height: 30px; color: #ffffff;">COMPANY TEST</span>
+                            <span style="font-size: 16px; line-height: 30px; color: #ffffff;">SPOON.PH</span>
                         </td>
                         <td style="text-align: right;">
                             <span

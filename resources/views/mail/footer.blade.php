@@ -14,12 +14,12 @@
             font-weight: 600;
             color: #434343;
           ">
-        SAMPLE COMPANY
+        SPOON.PH
     </p>
-    <p style="margin: 0; margin-top: 8px; color: #434343;">
+    <!-- <p style="margin: 0; margin-top: 8px; color: #434343;">
         Address 540, City, State.
-    </p>
-    <div style="margin: 0; margin-top: 16px;">
+    </p> -->
+    <!-- <div style="margin: 0; margin-top: 16px;">
         <a href="" target="_blank" style="display: inline-block;">
             <img width="36px" alt="Facebook"
                 src="https://archisketch-resources.s3.ap-northeast-2.amazonaws.com/vrstyler/1661502815169_682499/email-template-icon-facebook" />
@@ -34,9 +34,9 @@
         <a href="" target="_blank" style="display: inline-block; margin-left: 8px;">
             <img width="36px" alt="Youtube"
                 src="https://archisketch-resources.s3.ap-northeast-2.amazonaws.com/vrstyler/1661503195931_210869/email-template-icon-youtube" /></a>
-    </div>
+    </div> -->
     <p style="margin: 0; margin-top: 16px; color: #434343;">
-        Copyright © 2024 Company. All rights reserved.
+        Copyright © 2024. All rights reserved.
     </p>
 </footer>
 </div>
