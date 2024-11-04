@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Storage;
 
+Route::post('/check-register-email', [AuthController::class, 'checkRegisterEmail']);
+Route::get('/check-status-email', [AuthController::class, 'checkStatusEmail']);
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -173,6 +176,3 @@ Route::middleware('auth:sanctum')->group(function () {
         })->where('filename', '.*');
     });
 });
-
-Route::post('/check-register-email', [AuthController::class, 'checkRegisterEmail']);
-Route::get('/check-status-email', [AuthController::class, 'checkStatusEmail']);

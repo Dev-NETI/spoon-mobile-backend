@@ -23,7 +23,7 @@ class OtpRequest extends FormRequest
     {
         return [
             'email' => ['nullable'],
-            'temp_otp' => ['nullable'],
+            'tempt_otp' => ['nullable'],
             'otp' => ['nullable'],
         ];
     }

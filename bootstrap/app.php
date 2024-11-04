@@ -20,7 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'otp_verified' => App\Http\Middleware\EnsureOTPVerified::class,
-
         ]);
 
         //
