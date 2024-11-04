@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OtpRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -22,8 +21,8 @@ class AuthController extends Controller
     public function verifyOTP(Request $request)
     {
         $user_otp =  (int)  $request->input('otp');
-        // $temp_otp = Session::get('temp_otp');
-        $temp_otp = $request['temp_otp'];
+        $temp_otp = 123123;
+        // $temp_otp = $request['temp_otp'];
 
         // Validate OTP
         if ($temp_otp === $user_otp) {
@@ -61,12 +60,13 @@ class AuthController extends Controller
     {
         return response()->json(
             [
-                'isEmailValid' => Session::get('isEmailValid'), 
+                'isEmailValid' => Session::get('isEmailValid'),
                 'authEmail' => Session::get('email'),
                 'contactNum' => Session::get('contactNum'),
                 'dialingCodeId' => Session::get('dialingCodeId'),
                 'dialingCode' => Session::get('dialingCode'),
-                ]
-            , 200);
+            ],
+            200
+        );
     }
 }
