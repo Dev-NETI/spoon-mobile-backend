@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TopRecipeResource;
 use App\Models\Recipe;
 use Exception;
 use Illuminate\Http\Request;
-
+  
 class RecipeController extends Controller
 {
     public function index()
@@ -14,6 +15,21 @@ class RecipeController extends Controller
             ->where('is_active', 1)
             ->orderBy('name', 'asc')
             ->get();
+
+        if (!$recipeData) {
+            return response()->json(false);
+        }
+
+        return response()->json($recipeData);
+    }
+
+    public function topRecipe()
+    {
+        $recipeData = TopRecipeResource::collection(Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
+            ->where('is_active', 1)
+            ->orderBy('name', 'asc')
+            ->limit(5)
+            ->get());
 
         if (!$recipeData) {
             return response()->json(false);

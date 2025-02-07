@@ -10,30 +10,30 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public $temp_otp;
-    public function authenticating(Request $request)
+    public $tempt_otp;
+    public function authenticating(OtpRequest $request)
     {
-        $this->temp_otp = $request->input('temp_otp'); // Retrieve 'tempt_otp' from request
-        // Mail::to(Auth::user()->email)->send(new MailerLoginOtp(Auth::user()->email, $this->temp_otp));
-        Session::put('temp_otp', $this->temp_otp);
-        return response()->json(['status' =>  'already send otp: ' .  Session::get('temp_otp')], 200);
+        $this->tempt_otp = $request->input('tempt_otp'); // Retrieve 'tempt_otp' from request
+        // Mail::to(Auth::user()->email)->send(new MailerLoginOtp(Auth::user()->email, $this->tempt_otp));
+        Session::put('tempt_otp', $this->tempt_otp);
+        return response()->json(['status' =>  'already send otp: ' .  Session::get('tempt_otp') . ' to ' . Auth::user()->email], 200);
     }
 
-    public function verifyOTP(Request $request)
+    public function verifyOTP(OtpRequest $request)
     {
         $user_otp =  (int)  $request->input('otp');
-        // $temp_otp = Session::get('temp_otp');
-        $temp_otp = $request['temp_otp'];
+        // $tempt_otp = 123123;
+        $tempt_otp = Session::get('tempt_otp');
 
         // Validate OTP
-        if ($temp_otp === $user_otp) {
+        if ($tempt_otp === $user_otp) {
             // OTP verification successful
             Session::put('isVerified', true);
             $isVerified = Session::get('isVerified');
             return response()->json(['status' => $isVerified], 200);
         }
 
-        return response()->json(['status' => 'Check your OTP again, make sure you entered it correctly.'], 401);
+        return response()->json(['status' => 'Check your OTP again, make sure you entered it correctly.' . $tempt_otp . ' ' . $user_otp], 401);
     }
 
     public function checkingStatusOTP()
@@ -61,12 +61,13 @@ class AuthController extends Controller
     {
         return response()->json(
             [
-                'isEmailValid' => Session::get('isEmailValid'), 
+                'isEmailValid' => Session::get('isEmailValid'),
                 'authEmail' => Session::get('email'),
                 'contactNum' => Session::get('contactNum'),
                 'dialingCodeId' => Session::get('dialingCodeId'),
                 'dialingCode' => Session::get('dialingCode'),
-                ]
-            , 200);
+            ],
+            200
+        );
     }
 }
