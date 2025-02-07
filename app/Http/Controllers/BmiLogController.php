@@ -47,7 +47,8 @@ class BmiLogController extends Controller
         $bmiLogData = BmiLog::with(['bmi_category'])
             ->where('is_active', 1)
             ->where('user_id', $userId)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->limit(10)
             ->get();
 
         if (empty($bmiLogData)) {

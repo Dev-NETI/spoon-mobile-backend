@@ -154,11 +154,12 @@ Route::resource('/recipe-review', RecipeReviewController::class)->only(['store',
 
 Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumber}', [EmailController::class, 'sendVerificationCode']);
 
-Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class,'showBmiAnalytics']);
+Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
 Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
 Route::resource('/dialing-code', DialingCodeController::class)->only([
-    'index','show'
+    'index',
+    'show'
 ]);
 
 Route::post('/upload-image', [ImageUploadController::class, 'upload']);
