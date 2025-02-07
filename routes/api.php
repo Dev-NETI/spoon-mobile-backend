@@ -166,6 +166,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
 
+Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
+Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
+
+Route::resource('/dialing-code', DialingCodeController::class)->only([
+    'index',
+    'show'
+]);
 
     Route::post('/upload-image', [ImageUploadController::class, 'upload']);
 
