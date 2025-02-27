@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Resources\AuthenticatedUserResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 Route::post('/check-register-email', [AuthController::class, 'checkRegisterEmail']);
@@ -57,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
     Route::resource('/category', CategoryController::class)->only([
         'index',
+        'show'
     ]);
     Route::resource('/rank', RankController::class)->only([
         'index',
@@ -133,6 +135,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/meal-type/all-meal-type', [MealTypeController::class, 'AllMealType']);
 
+
     Route::resource('/meal-type', MealTypeController::class)->only([
         'index',
         'store',
@@ -142,6 +145,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
 
     Route::patch('/meal-type/activate/{slug}', [MealTypeController::class, 'ActivateMealType']);
+    Route::get('/meal-type/fetch', [MealTypeController::class, 'fetch'])->name('meal-type.fetch');
 
 
     Route::resource('/season', SeasonController::class)->only([

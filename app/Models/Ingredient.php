@@ -25,6 +25,11 @@ class Ingredient extends Model
         'modified_by'
     ];
 
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

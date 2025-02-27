@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BmiLog extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug', 'user_id', 'bmi_category_id', 'bmi', 'is_active', 'modified_by'];
+    protected $fillable = ['slug', 'user_id', 'weight', 'height', 'bmi_category_id', 'bmi', 'is_active', 'modified_by'];
 
     protected static function boot()
     {

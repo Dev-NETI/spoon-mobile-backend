@@ -24,4 +24,9 @@ class SavedRecipe extends Model
             $model->modified_by = 'system';
         });
     }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class, 'recipe_id'); // Assuming "recipe_id" is the foreign key
+    }
 }

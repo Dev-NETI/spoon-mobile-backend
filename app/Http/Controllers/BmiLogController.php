@@ -48,7 +48,7 @@ class BmiLogController extends Controller
             ->where('is_active', 1)
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         if (empty($bmiLogData)) {
             return response()->json(false);

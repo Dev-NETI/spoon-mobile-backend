@@ -21,6 +21,8 @@ class TopRecipeResource extends JsonResource
             'mealType' => $this->meal_type->name,
             'flag' => $this->recipe_origin->image_path,
             'origin' => $this->recipe_origin->name,
+            'reviews' => $this->recipe_review,
+            'slug' => $this->slug,
         ];
     }
 }

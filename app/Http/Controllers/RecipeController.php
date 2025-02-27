@@ -6,9 +6,10 @@ use App\Http\Resources\TopRecipeResource;
 use App\Models\Recipe;
 use Exception;
 use Illuminate\Http\Request;
-  
+
 class RecipeController extends Controller
 {
+
     public function index()
     {
         $recipeData = Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
@@ -25,11 +26,17 @@ class RecipeController extends Controller
 
     public function topRecipe()
     {
-        $recipeData = TopRecipeResource::collection(Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
-            ->where('is_active', 1)
-            ->orderBy('name', 'asc')
-            ->limit(5)
-            ->get());
+
+        $recipeData = TopRecipeResource::collection(
+            Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'recipe_review'])
+                ->where('is_active', 1)
+                ->whereHas('recipe_review')
+                ->withCount('recipe_review')
+                ->orderBy('recipe_review_count', 'desc')
+                ->orderBy('name', 'asc')
+                ->limit(5)
+                ->get()
+        );
 
         if (!$recipeData) {
             return response()->json(false);
@@ -47,7 +54,10 @@ class RecipeController extends Controller
                 'food_group_list_item.food_group',
                 'season_list_item.season',
                 'ingredient',
-                'procedure'
+                'ingredient.unit',
+                'procedure',
+                'recipe_review',
+                'recipe_review.user',
             ])->where('slug', $slug)->firstOrFail();
 
             return response()->json($recipe);
@@ -75,6 +85,8 @@ class RecipeController extends Controller
             return response()->json(false);
         }
     }
+
+    public function filteredRecipe(Request $request) {}
 
     public function store(Request $request)
     {

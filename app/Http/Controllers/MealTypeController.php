@@ -45,6 +45,18 @@ class MealTypeController extends Controller
         }
     }
 
+    public function fetch(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (is_string($ids)) {
+            $ids = explode(',', $ids);
+        }
+
+        $mealTypes = MealType::whereIn('id', $ids)->where('is_active', 1)->get();
+
+        return response()->json($mealTypes);
+    }
+
     public function show($slug)
     {
         try {

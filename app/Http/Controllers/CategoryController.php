@@ -9,6 +9,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return response()->json(Category::where('is_active',1)->orderBy('name','asc')->get());
+        return response()->json(Category::where('is_active', 1)->orderBy('name', 'asc')->get());
     }
 }

@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function showAll($userTypeId,$company)
+    public function showAll($userTypeId, $company)
     {
         $query = User::query();
 
-        if($userTypeId == 2){
-            $query->where('company',$company);
+        if ($userTypeId == 2) {
+            $query->where('company', $company);
         }
 
         $userData = $query->orderBy('created_at', 'desc')->get();
@@ -332,15 +332,15 @@ class UserController extends Controller
         }
     }
 
-    public function checkContactNumber($contactNumber,$dialingCode = null)
+    public function checkContactNumber($contactNumber, $dialingCode = null)
     {
         try {
-            $contactNumberData = User::where('contact_number',$contactNumber)->first();
+            $contactNumberData = User::where('contact_number', $contactNumber)->first();
             $dialingCodeData = DialingCode::where('id', $dialingCode)->first();
             Session::put('dialingCodeId', $dialingCodeData->id);
             Session::put('dialingCode', $dialingCodeData->dialing_code);
 
-            if(!$contactNumberData){
+            if (!$contactNumberData) {
                 Session::put('contactNum', $contactNumber);
                 return response()->json(false);
             }
