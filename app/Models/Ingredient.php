@@ -44,4 +44,9 @@ class Ingredient extends Model
     {
         return $this->belongsTo(Recipe::class, 'recipe_id');
     }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
 }

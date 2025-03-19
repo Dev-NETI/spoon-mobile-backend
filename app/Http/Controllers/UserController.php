@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function showAll($userTypeId,$company)
+    public function showAll($userTypeId, $company)
     {
         $query = User::query();
 
-        if($userTypeId == 2){
-            $query->where('company',$company);
+        if ($userTypeId == 2) {
+            $query->where('company', $company);
         }
 
-        $userData = $query->orderBy('created_at', 'desc')->get();
+        $userData = $query->orderBy('created_at', 'desc')->paginate(10);
 
         if (!$userData) {
             return response()->json(false);
@@ -298,6 +298,7 @@ class UserController extends Controller
             "lastname" =>  "required|string|max:255",
             "company" => 'required',
             "rank" => 'required',
+            "date_of_birth" => 'required|date',
             "category" => 'required',
             "nationality" => 'required',
             "gender" => 'required',
@@ -314,12 +315,13 @@ class UserController extends Controller
                 'firstname' => $request['firstname'],
                 'middlename' => $request['middlename'],
                 'lastname' => $request['lastname'],
-                'suffix' => $request['suffix'],
                 'company' => $request['company'],
+                'suffix' => $request['suffix'],
                 'rank_id' => $request['rank'],
                 'category_id' => $request['category'],
                 'nationality_id' => $request['nationality'],
-                'gender_i' => $request['gender'],
+                'gender_id' => $request['gender'],
+                'date_of_birth' => $request['date_of_birth'],
             ]);
 
             if (!$update) {
@@ -332,15 +334,15 @@ class UserController extends Controller
         }
     }
 
-    public function checkContactNumber($contactNumber,$dialingCode = null)
+    public function checkContactNumber($contactNumber, $dialingCode = null)
     {
         try {
-            $contactNumberData = User::where('contact_number',$contactNumber)->first();
+            $contactNumberData = User::where('contact_number', $contactNumber)->first();
             $dialingCodeData = DialingCode::where('id', $dialingCode)->first();
             Session::put('dialingCodeId', $dialingCodeData->id);
             Session::put('dialingCode', $dialingCodeData->dialing_code);
 
-            if(!$contactNumberData){
+            if (!$contactNumberData) {
                 Session::put('contactNum', $contactNumber);
                 return response()->json(false);
             }

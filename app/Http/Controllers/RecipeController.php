@@ -6,7 +6,7 @@ use App\Http\Resources\TopRecipeResource;
 use App\Models\Recipe;
 use Exception;
 use Illuminate\Http\Request;
-  
+
 class RecipeController extends Controller
 {
     public function index()
@@ -25,7 +25,8 @@ class RecipeController extends Controller
 
     public function topRecipe()
     {
-        $recipeData = TopRecipeResource::collection(Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group'])
+        $recipeData = TopRecipeResource::collection(Recipe::with(['recipe_origin', 'meal_type', 'season_list_item.season', 'food_group_list_item.food_group', 'recipe_review'])
+            ->whereHas('recipe_review')
             ->where('is_active', 1)
             ->orderBy('name', 'asc')
             ->limit(5)
@@ -44,9 +45,12 @@ class RecipeController extends Controller
             $recipe = Recipe::with([
                 'meal_type',
                 'recipe_origin',
+                'recipe_review',
+                'recipe_review.user',
                 'food_group_list_item.food_group',
                 'season_list_item.season',
                 'ingredient',
+                'ingredient.unit',
                 'procedure'
             ])->where('slug', $slug)->firstOrFail();
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MealLogItem extends Model
 {
     use HasFactory;
-    protected $fillable = ['slug', 'user_id', 'meal_id', 'recipe_id', 'number_of_serving', 'is_active', 'modified_by'];
+    protected $fillable = ['slug', 'user_id', 'meal_id', 'recipe_id', 'date', 'number_of_serving', 'is_active', 'modified_by'];
 
     protected static function boot()
     {

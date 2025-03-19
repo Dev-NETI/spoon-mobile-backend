@@ -16,11 +16,13 @@ class TopRecipeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'name' => $this->name,
             'imagePath' => $this->image_path,
             'mealType' => $this->meal_type->name,
             'flag' => $this->recipe_origin->image_path,
             'origin' => $this->recipe_origin->name,
+            'reviews' => $this->recipe_review->count(),
         ];
     }
 }

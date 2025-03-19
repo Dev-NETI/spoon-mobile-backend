@@ -15,6 +15,7 @@ class MealLogItemController extends Controller
             "mealId" => 'required',
             "userId" => 'required',
             "recipeId" => 'required',
+            "date" => 'required|date',
         ]);
 
         try {
@@ -23,6 +24,7 @@ class MealLogItemController extends Controller
                 'meal_id' => $request['mealId'],
                 'recipe_id' => $request['recipeId'],
                 'number_of_serving' => $request['numberOfServings'],
+                'date' => $request['date'],
             ]);
 
             if (!$store) {
@@ -39,7 +41,7 @@ class MealLogItemController extends Controller
     {
         $mealLogItemData = MealLogItem::with(['recipe'])
             ->where('user_id', $userId)
-            ->where('created_at', 'LIKE', '%' . $createdAt . '%')
+            ->where('date', $createdAt)
             ->get();
 
         if (!$mealLogItemData) {
@@ -47,5 +49,29 @@ class MealLogItemController extends Controller
         }
 
         return response()->json($mealLogItemData);
+    }
+    /**
+     * Delete a meal log item based on recipe_id, created_at, meal_id, and user_id
+     */
+    public function deleteMealLogItem(Request $request)
+    {
+        $request->validate([
+            'recipe_id'   => 'required|integer',
+            'created_at'  => 'required|date',
+            'meal_id'     => 'required|integer',
+            'user_id'     => 'required|integer',
+        ]);
+
+        $deleted = MealLogItem::where('recipe_id', $request->recipe_id)
+            ->where('user_id', $request->user_id)
+            ->where('meal_id', $request->meal_id)
+            ->where('date',  $request->created_at)
+            ->delete();
+
+        if ($deleted) {
+            return response()->json(['success' => true, 'message' => 'Meal log item deleted successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No matching meal log item found.'], 404);
     }
 }

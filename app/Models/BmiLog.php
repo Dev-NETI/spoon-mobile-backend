@@ -32,6 +32,6 @@ class BmiLog extends Model
 
     public function bmi_category()
     {
-        return $this->belongsTo(BmiCategory::class, 'bmi_category_id', 'id');
+        return $this->belongsTo(BmiCategory::class, 'bmi_category_id');
     }
 }

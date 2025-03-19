@@ -33,6 +33,7 @@ class SavedRecipeController extends Controller
         $savedRecipes = SavedRecipe::from('saved_recipes as a')
             ->join('recipes as b', 'a.recipe_id', '=', 'b.id')
             ->join('recipe_origins as c', 'b.recipe_origin_id', '=', 'c.id')
+            ->join('meal_types as d', 'b.meal_type_id', '=', 'd.id')
             ->where('a.is_active', 1)
             ->where('a.user_id', $user)
             ->orderBy('a.modified_by', 'asc')
@@ -44,6 +45,7 @@ class SavedRecipeController extends Controller
                 'c.name AS origin_name',
                 'c.image_path',
                 'b.slug',
+                'd.name AS meal_type',
             ])
             ->get();
 

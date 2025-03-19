@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLevelController;
+use App\Http\Controllers\AmrController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BloodPressureLogController;
 use App\Http\Controllers\BmiLogController;
@@ -26,7 +27,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
-use App\Http\Resources\AuthenticatedUserResource;
+use App\Http\Controllers\RecommendedCalorieIntakeHistoryItemController;
 use Illuminate\Support\Facades\Storage;
 
 Route::post('/check-register-email', [AuthController::class, 'checkRegisterEmail']);
@@ -76,6 +77,9 @@ Route::middleware('auth:sanctum')->group(function () {
         'show',
     ]);
 
+    Route::resource('/amrs', AmrController::class)->only(['index']);
+
+
     Route::get('/users/get-all-user/{userTypeId}/{company}', [UserController::class, 'showAll']);
     Route::patch('/user/update-personal-information/{slug}', [UserController::class, 'updatePersonalInformation']);
     Route::patch('/user/update-measurement/{slug}', [UserController::class, 'updateMeasurement']);
@@ -118,6 +122,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
 
     Route::get('/meal-log-item/{userId}/{createdAt}', [MealLogItemController::class, 'show']);
+    Route::delete('/meal-log-item/delete', [MealLogItemController::class, 'deleteMealLogItem']);
 
     Route::resource('/dietary-reference-value', DietaryReferenceValueController::class)->only([
         'index'
@@ -130,6 +135,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/meal', MealController::class)->only([
         'index'
     ]);
+    Route::resource('/calorie-logs', RecommendedCalorieIntakeHistoryItemController::class)->only(['index', 'show', 'store']);
 
     Route::get('/meal-type/all-meal-type', [MealTypeController::class, 'AllMealType']);
 
@@ -166,13 +172,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
 
-Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
-Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
+    Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
+    Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
-Route::resource('/dialing-code', DialingCodeController::class)->only([
-    'index',
-    'show'
-]);
+    Route::resource('/dialing-code', DialingCodeController::class)->only([
+        'index',
+        'show'
+    ]);
 
     Route::post('/upload-image', [ImageUploadController::class, 'upload']);
 

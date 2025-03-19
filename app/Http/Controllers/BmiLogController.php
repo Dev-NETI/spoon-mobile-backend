@@ -47,13 +47,13 @@ class BmiLogController extends Controller
         $bmiLogData = BmiLog::with(['bmi_category'])
             ->where('is_active', 1)
             ->where('user_id', $userId)
-            ->orderBy('created_at', 'asc')
-            ->limit(10)
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        if (empty($bmiLogData)) {
-            return response()->json(false);
+        if ($bmiLogData->isEmpty()) { // ✅ Proper way to check empty collection
+            return response()->json([], 200); // ✅ Return empty array instead of `false`
         }
-        return response()->json($bmiLogData);
+
+        return response()->json($bmiLogData, 200);
     }
 }
