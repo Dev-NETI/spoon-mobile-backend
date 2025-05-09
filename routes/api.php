@@ -78,7 +78,9 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
 
     Route::resource('/amrs', AmrController::class)->only(['index']);
-
+    Route::resource('/activity-level', ActivityLevelController::class)->only([
+        'index'
+    ]);
 
     Route::get('/users/get-all-user/{userTypeId}/{company}', [UserController::class, 'showAll']);
     Route::patch('/user/update-personal-information/{slug}', [UserController::class, 'updatePersonalInformation']);
@@ -188,7 +190,3 @@ Route::middleware('auth:sanctum')->group(function () {
     })->where('filename', '.*');
     // });
 });
-
-Route::resource('/activity-level', ActivityLevelController::class)->only([
-    'index'
-]);
