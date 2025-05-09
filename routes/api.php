@@ -128,9 +128,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'index'
     ]);
 
-    Route::resource('/activity-level', ActivityLevelController::class)->only([
-        'index'
-    ]);
+
 
     Route::resource('/meal', MealController::class)->only([
         'index'
@@ -175,10 +173,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/bmi-data/{weightClass}/{userTypeId}/{companyId}', [DashboardController::class, 'showBmiAnalytics']);
     Route::get('/dashboard/top-ten-recipe', [DashboardController::class, 'showTopTenRatedRecipe']);
 
-    Route::resource('/dialing-code', DialingCodeController::class)->only([
-        'index',
-        'show'
-    ]);
+
 
     Route::post('/upload-image', [ImageUploadController::class, 'upload']);
 
@@ -193,3 +188,7 @@ Route::middleware('auth:sanctum')->group(function () {
     })->where('filename', '.*');
     // });
 });
+
+Route::resource('/activity-level', ActivityLevelController::class)->only([
+    'index'
+]);
