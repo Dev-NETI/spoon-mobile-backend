@@ -163,7 +163,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
 
     Route::get('/saved-recipe/show/{recipeId}/{userId}', [SavedRecipeController::class, 'showSavedRecipe']);
-    Route::delete('/saved-recipe/destroy/{recipeId}/{userId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
+    Route::delete('/saved-recipe/destroy/{recipeId}', [SavedRecipeController::class, 'unFavoriteRecipe']);
 
 
     Route::resource('/recipe-review', RecipeReviewController::class)->only(['store', 'show']);
