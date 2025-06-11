@@ -45,26 +45,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/verify-otp', [AuthController::class, 'verifyOTP']);
     Route::post('/authenticating', [AuthController::class, 'authenticating']);
     Route::get('/checking-status-otp', [AuthController::class, 'checkingStatusOTP']);
-    Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumber}', [EmailController::class, 'sendVerificationCode']);
+
 
     // Route::middleware('otp_verified')->group(function () {
 
-    Route::resource('/company', CompanyController::class)->only([
-        'index',
-    ]);
+
     Route::resource('/saved-recipe', SavedRecipeController::class)->only([
         'index',
         'show',
     ]);
-    Route::resource('/category', CategoryController::class)->only([
-        'index',
-    ]);
-    Route::resource('/rank', RankController::class)->only([
-        'index',
-    ]);
-    Route::resource('/nationality', NationalityController::class)->only([
-        'index',
-    ]);
+
+
     Route::resource('/food-group', FoodGroupController::class)->only([
         'index',
     ]);
@@ -73,7 +64,6 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
 
     Route::resource('/user', UserController::class)->only([
-        'store',
         'show',
     ]);
 
@@ -91,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/user/update-basic-information/{slug}', [UserController::class, 'updateBasicInformation']);
     Route::patch('/user/update-password/{slug}', [UserController::class, 'updatePassword']);
     Route::patch('/user/update-contact-information/{slug}', [UserController::class, 'updateContactInformation']);
-    Route::get('/user/check-contact-number/{contactNumber}/{dialingCode}', [UserController::class, 'checkContactNumber']);
+
 
     Route::resource('/bmi-log', BmiLogController::class)->only([
         'store',
@@ -190,3 +180,23 @@ Route::middleware('auth:sanctum')->group(function () {
     })->where('filename', '.*');
     // });
 });
+
+
+// do not put these routes inside sanctum middleware
+Route::get('/user/check-contact-number/{contactNumber}/{dialingCode}', [UserController::class, 'checkContactNumber']);
+Route::get('/email/send-verification-code/{verificationCode}/{email}/{mobileNumber}', [EmailController::class, 'sendVerificationCode']);
+Route::resource('/nationality', NationalityController::class)->only([
+    'index',
+]);
+Route::resource('/category', CategoryController::class)->only([
+    'index',
+]);
+Route::resource('/rank', RankController::class)->only([
+    'index',
+]);
+Route::resource('/company', CompanyController::class)->only([
+    'index',
+]);
+Route::resource('/user', UserController::class)->only([
+    'store',
+]);
