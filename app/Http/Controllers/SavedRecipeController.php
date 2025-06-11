@@ -46,6 +46,7 @@ class SavedRecipeController extends Controller
                 'c.image_path',
                 'b.slug',
                 'd.name AS meal_type',
+                'a.id',
             ])
             ->get();
 
@@ -74,10 +75,10 @@ class SavedRecipeController extends Controller
         }
     }
 
-    public function unFavoriteRecipe($recipeId, $userId)
+    public function unFavoriteRecipe($id)
     {
         try {
-            $favoriteData = SavedRecipe::where('recipe_id', $recipeId)->where('user_id', $userId)->first();
+            $favoriteData = SavedRecipe::where('id', $id)->first();
 
             if (!$favoriteData) {
                 return response()->json(false);
